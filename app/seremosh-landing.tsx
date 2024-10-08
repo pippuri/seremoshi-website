@@ -109,7 +109,7 @@ export default function Component() {
       </main>
 
       <footer className="container mx-auto px-4 py-8 mt-16 text-center text-muted-foreground">
-        © 2024 Seremosh. All rights reserved.
+        © 2023 Seremosh. All rights reserved.
       </footer>
     </div>
   );
