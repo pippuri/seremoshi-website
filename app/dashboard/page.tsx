@@ -2,12 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { currentUser } from "@clerk/nextjs/server";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+//import { currentUser } from "@clerk/nextjs/server";
 import CallChart from "@/components/ui/callchart";
 
 export default async function DashboardPage() {
-  const user = await currentUser();
+  //const user = await currentUser();
   return (
     <div className="flex flex-col min-h-screen">
       <header className="border-b">

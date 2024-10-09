@@ -1,5 +1,4 @@
-import { ArrowRight, Shield, Rocket, Clock } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Shield, Rocket, Clock } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -15,8 +14,8 @@ export function AboutSection() {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">About moshizen</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            We're empowering professionals to focus on what they do best. No
-            hassle, no distractions. Fair and transparent pricing.
+            We&apos;re empowering professionals to focus on what they do best.
+            No hassle, no distractions. Fair and transparent pricing.
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -41,7 +40,15 @@ export function AboutSection() {
   );
 }
 
-function AboutCard({ icon, title, description }) {
+function AboutCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
   return (
     <Card>
       <CardHeader>
