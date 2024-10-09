@@ -14,6 +14,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { SignedOut, SignedIn, SignInButton, UserButton } from "@clerk/nextjs";
+import { MoshizenLogo } from "./moshizen-logo";
 
 export default function Navbar() {
   const { setTheme, theme } = useTheme();
@@ -21,9 +22,9 @@ export default function Navbar() {
   return (
     <header className="container mx-auto px-4 py-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-purple-700 dark:text-purple-400">
-          <Link href="/">&#128222; moshizen</Link>
-        </h1>
+        <a href="/">
+          <MoshizenLogo />
+        </a>
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
