@@ -121,7 +121,7 @@ export default function Component() {
           </CardHeader>
           <CardContent>
             <Button size="lg" className="rounded-full">
-              Start Your Free Trial
+              <a href="/signup">Start Your Free Trial</a>
             </Button>
           </CardContent>
         </Card>
