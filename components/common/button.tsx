@@ -32,7 +32,7 @@ export const Button: FC<ButtonProps> = ({
         "rounded-md font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2",
         variantClasses[variant],
         sizeClasses[size],
-        className
+        className,
       )}
       {...props}
     >

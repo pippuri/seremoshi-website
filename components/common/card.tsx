@@ -13,7 +13,7 @@ export const Card = ({ children, className }: CardProps) => {
     <div
       className={cn(
         "bg-white dark:bg-gray-800 rounded-lg p-6 transition-transform transform hover:-translate-y-1",
-        className
+        className,
       )}
     >
       {children}
