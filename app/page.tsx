@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { BarChart, CreditCard, Clock, Check } from "lucide-react";
-import { useTheme } from "next-themes";
-import Navbar from "../components/common/navbar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
