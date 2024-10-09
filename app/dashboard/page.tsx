@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { currentUser } from "@clerk/nextjs/server";
+import CallChart from "@/components/ui/callchart";
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -17,12 +18,18 @@ export default async function DashboardPage() {
           <nav>
             <ul className="flex space-x-4">
               <li>
-                <a href="#" className="text-gray-600 hover:text-gray-900">
+                <a
+                  href="/dashboard/#"
+                  className="text-gray-600 hover:text-gray-900"
+                >
                   Overview
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-gray-900">
+                <a
+                  href="/dashboard/settings#"
+                  className="text-gray-600 hover:text-gray-900"
+                >
                   Settings
                 </a>
               </li>
@@ -36,9 +43,9 @@ export default async function DashboardPage() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Dashboard</h1>
           <div className="flex items-center space-x-4">
-            <Input type="date" className="w-auto" defaultValue="2023-01-20" />
+            <Input type="date" className="w-auto" defaultValue="2024-01-01" />
             <span>to</span>
-            <Input type="date" className="w-auto" defaultValue="2023-02-09" />
+            <Input type="date" className="w-auto" defaultValue="2024-12-31" />
             <Button>Download</Button>
           </div>
         </div>
@@ -102,8 +109,7 @@ export default async function DashboardPage() {
                   <CardTitle>Call Minutes</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {/* Add a chart component here */}
-                  <div className="h-80 bg-gray-100">Chart placeholder</div>
+                  <CallChart />
                 </CardContent>
               </Card>
               <Card>
