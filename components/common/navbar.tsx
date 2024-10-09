@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ChartBarIcon, Moon, Sun } from "lucide-react";
+import { BrainCog, ChartBarIcon, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
@@ -71,6 +71,11 @@ export default function Navbar() {
                       label="Dashboard"
                       labelIcon={<ChartBarIcon />}
                       href="/dashboard"
+                    />
+                    <UserButton.Link
+                      label="AI Settings"
+                      labelIcon={<BrainCog />}
+                      href="/dashboard/settings"
                     />
                   </UserButton.MenuItems>
                 </UserButton>
