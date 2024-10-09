@@ -1,28 +1,58 @@
 "use client";
 
+import * as React from "react";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
-import ThemeToggle from "./theme-toggle";
 
-const Navbar = () => {
+import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+
+export default function Navbar() {
+  const { setTheme, theme } = useTheme();
+
   return (
-    <nav className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 shadow">
-      <Link
-        href="/"
-        className="text-xl font-bold text-gray-900 dark:text-white"
-      >
-        Seremosh
-      </Link>
-      <div className="flex items-center space-x-4">
-        <Link
-          href="/pricing"
-          className="text-gray-700 dark:text-gray-300 hover:underline"
-        >
-          Pricing
-        </Link>
-        <ThemeToggle />
+    <header className="container mx-auto px-4 py-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-purple-700 dark:text-purple-400">
+          <Link href="/">moshizen &#128222;</Link>
+        </h1>
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <Link href="/#pricing" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Pricing
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href="/#about" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  About
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              >
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
-    </nav>
+    </header>
   );
-};
-
-export default Navbar;
+}

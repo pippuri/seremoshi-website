@@ -11,7 +11,7 @@ const CTASection = () => {
           Ready to Elevate Your Business?
         </h2>
         <p className="text-lg mb-8">
-          Join Seremosh today and start transforming your business with our
+          Join moshizen today and start transforming your business with our
           cutting-edge tools.
         </p>
         <SignInButton mode="modal">

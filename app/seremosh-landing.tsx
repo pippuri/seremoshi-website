@@ -28,7 +28,7 @@ export default function Component() {
       <header className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold text-purple-700 dark:text-purple-400">
-            Seremosh
+            moshizen
           </h1>
           <NavigationMenu>
             <NavigationMenuList>

@@ -1,9 +1,17 @@
 "use client";
 
 import * as React from "react";
-import { Moon, Sun, BarChart, CreditCard, Headphones } from "lucide-react";
+import {
+  Moon,
+  Sun,
+  BarChart,
+  CreditCard,
+  Clock,
+  Check,
+  Link,
+} from "lucide-react";
 import { useTheme } from "next-themes";
-
+import Navbar from "../components/common/navbar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,6 +19,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
 import {
   NavigationMenu,
@@ -25,67 +34,94 @@ export default function Component() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <header className="container mx-auto px-4 py-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-purple-700 dark:text-purple-400">
-            Seremosh
-          </h1>
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  className={navigationMenuTriggerStyle()}
-                  href="#"
-                >
-                  Pricing
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                >
-                  <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                  <span className="sr-only">Toggle theme</span>
-                </Button>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
-      </header>
-
       <main className="container mx-auto px-4 py-16">
         <section className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
-            Transform Your Business with Seremosh
+            Keep your productivity uninterrupted with moshizen
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Unlock powerful tools and analytics to drive your success.
+            Let our AI assistant answer your calls, so you can focus on growing
+            your business.
           </p>
           <Button size="lg" className="rounded-full">
-            Get Started Now
+            <a href="/#pricing">Get Started Now</a>
           </Button>
         </section>
 
         <section className="mb-16">
-          <h3 className="text-3xl font-bold text-center mb-12">Our Features</h3>
+          <h3 className="text-3xl font-bold text-center mb-12">
+            What moshizen can do for you
+          </h3>
           <div className="grid md:grid-cols-3 gap-8">
+            <FeatureCard
+              icon={<Clock className="w-10 h-10 text-purple-500" />}
+              title="More time to focus on your business"
+              description="Let moshizen handle your calls, so you can focus on growing your business."
+            />
             <FeatureCard
               icon={<BarChart className="w-10 h-10 text-purple-500" />}
               title="Comprehensive Analytics"
-              description="Gain deep insights into your business performance with our advanced analytics tools."
+              description="Tools to keep track of how moshizen is handling your calls."
             />
             <FeatureCard
               icon={<CreditCard className="w-10 h-10 text-purple-500" />}
-              title="Seamless Subscription Management"
-              description="Easily manage your subscriptions and billing with our intuitive interface."
+              title="Straightforward Pricing"
+              description="We have a pricing model that makes sense and scales with your business."
             />
-            <FeatureCard
-              icon={<Headphones className="w-10 h-10 text-purple-500" />}
-              title="24/7 Customer Support"
-              description="Our dedicated support team is here to help you around the clock."
+          </div>
+        </section>
+
+        <section className="mb-16" id="pricing">
+          <h3 className="text-3xl font-bold text-center mb-12">
+            Simple Pricing
+          </h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            <PricingCard
+              title="Starter"
+              price="$2"
+              description="Perfect for individuals"
+              actionUrl="/signup?plan=starter"
+              features={[
+                "50 AI-answered calls per month",
+                "Custom instructions",
+                "0.01$ per call extra",
+                "Email transcripts",
+                "Customer Portal",
+                "Analytics",
+                "Email support",
+              ]}
+            />
+            <PricingCard
+              title="Pro"
+              price="$19"
+              description="Ideal for busy executives"
+              actionUrl="/signup?plan=pro"
+              features={[
+                "200 AI-answered calls per month",
+                "Custom instructions",
+                "0.01$ per call extra",
+                "Email transcripts",
+                "Customer Portal",
+                "Analytics",
+                "Priority email support",
+              ]}
+              highlighted={true}
+            />
+            <PricingCard
+              title="Enterprise"
+              price="Custom"
+              description="For large-scale operations"
+              actionUrl="https://maas-solutions.fi/contact"
+              features={[
+                "Custom limits",
+                "Custom instructions",
+                "Custom greeting",
+                "Email transcripts",
+                "Customer Portal with SSO",
+                "Full analytics suite",
+                "Custom integration",
+                "Priority support",
+              ]}
             />
           </div>
         </section>
@@ -109,7 +145,7 @@ export default function Component() {
       </main>
 
       <footer className="container mx-auto px-4 py-8 mt-16 text-center text-muted-foreground">
-        © 2024 Seremosh. All rights reserved.
+        © 2024 moshizen. All rights reserved.
       </footer>
     </div>
   );
@@ -125,6 +161,52 @@ function FeatureCard({ icon, title, description }) {
       <CardContent>
         <CardDescription>{description}</CardDescription>
       </CardContent>
+    </Card>
+  );
+}
+
+function PricingCard({
+  title,
+  price,
+  description,
+  features,
+  highlighted = false,
+  actionUrl = "/signup",
+}) {
+  return (
+    <Card
+      className={`flex flex-col ${highlighted ? "border-purple-500 border-2" : ""}`}
+    >
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold">{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <p className="text-4xl font-bold mb-4">
+          {price}
+          <span className="text-xl font-normal">/mo</span>
+        </p>
+        <ul className="space-y-2">
+          {features.map((feature, index) => (
+            <li key={index} className="flex items-center">
+              <Check className="w-5 h-5 text-green-500 mr-2" />
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+      <CardFooter>
+        <Button
+          className={`w-full ${highlighted ? "bg-purple-500 hover:bg-purple-600" : ""}`}
+        >
+          <a
+            href={actionUrl}
+            className="w-full h-full flex items-center justify-center"
+          >
+            Choose Plan
+          </a>
+        </Button>
+      </CardFooter>
     </Card>
   );
 }

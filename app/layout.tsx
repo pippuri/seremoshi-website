@@ -1,27 +1,15 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import { ClerkProvider } from "@clerk/nextjs";
 import "../styles/globals.css";
+import { ThemeProvider } from "next-themes";
+import Navbar from "../components/common/navbar";
 import Script from "next/script";
 import { GA_TRACKING_ID } from "../lib/gtag";
 import Analytics from "../components/common/Analytics";
-import { ThemeProvider } from "next-themes";
-import Navbar from "../components/common/navbar";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
-  title: "Seremosh",
-  description: "Seremosh",
+  title: "moshizen",
+  description: "Your AI-powered telephone receptionist",
 };
 
 export default function RootLayout({
@@ -48,11 +36,10 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body>
         <ClerkProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Navbar />
             <Analytics />
             {children}
           </ThemeProvider>
