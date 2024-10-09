@@ -63,7 +63,7 @@ export default function Component() {
               title="Starter"
               price="$2"
               description="Perfect for individuals"
-              actionUrl="/signup?plan=starter"
+              actionUrl="https://buy.stripe.com/28ocQ87Eq4G5dwI5ko"
               features={[
                 "50 AI-answered calls per month",
                 "Custom instructions",
@@ -78,7 +78,7 @@ export default function Component() {
               title="Pro"
               price="$19"
               description="Ideal for busy executives"
-              actionUrl="/signup?plan=pro"
+              actionUrl="https://buy.stripe.com/28ocQ87Eq4G5dwI5ko"
               features={[
                 "200 AI-answered calls per month",
                 "Custom instructions",
@@ -134,7 +134,13 @@ export default function Component() {
   );
 }
 
-function FeatureCard({ icon, title, description }) {
+interface FeatureCardProps {
+  icon: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  title: string;
+  description: string;
+}
+
+function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
     <Card>
       <CardHeader>
@@ -148,6 +154,15 @@ function FeatureCard({ icon, title, description }) {
   );
 }
 
+interface PricingCardProps {
+  title: string;
+  price: string | number;
+  description: string;
+  features: string[];
+  highlighted?: boolean;
+  actionUrl?: string;
+}
+
 function PricingCard({
   title,
   price,
@@ -155,7 +170,7 @@ function PricingCard({
   features,
   highlighted = false,
   actionUrl = "/signup",
-}) {
+}: PricingCardProps) {
   return (
     <Card
       className={`flex flex-col ${highlighted ? "border-purple-500 border-2" : ""}`}
