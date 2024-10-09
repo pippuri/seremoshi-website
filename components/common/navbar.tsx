@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Moon, Sun } from "lucide-react";
+import { ChartBarIcon, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
@@ -22,7 +22,7 @@ export default function Navbar() {
     <header className="container mx-auto px-4 py-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-purple-700 dark:text-purple-400">
-          <Link href="/">moshizen &#128222;</Link>
+          <Link href="/">&#128222; moshizen</Link>
         </h1>
         <NavigationMenu>
           <NavigationMenuList>
@@ -52,11 +52,27 @@ export default function Navbar() {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
+              <Link href="/dashboard" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Dashboard
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
               <SignedOut>
                 <SignInButton />
               </SignedOut>
               <SignedIn>
-                <UserButton />
+                <UserButton>
+                  {" "}
+                  <UserButton.MenuItems>
+                    <UserButton.Link
+                      label="Dashboard"
+                      labelIcon={<ChartBarIcon />}
+                      href="/dashboard"
+                    />
+                  </UserButton.MenuItems>
+                </UserButton>
               </SignedIn>
             </NavigationMenuItem>
           </NavigationMenuList>

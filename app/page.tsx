@@ -11,6 +11,8 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
+import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { AboutSection } from "@/components/common/about";
 
 export default function Component() {
   //const { setTheme, theme } = useTheme(); // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -109,6 +111,8 @@ export default function Component() {
           </div>
         </section>
 
+        <AboutSection />
+
         <Card className="text-center bg-purple-100 dark:bg-gray-800">
           <CardHeader>
             <CardTitle className="text-3xl font-bold">
@@ -121,7 +125,7 @@ export default function Component() {
           </CardHeader>
           <CardContent>
             <Button size="lg" className="rounded-full">
-              <a href="/signup">Start Your Free Trial</a>
+              <SignUpButton />
             </Button>
           </CardContent>
         </Card>
@@ -197,12 +201,24 @@ function PricingCard({
         <Button
           className={`w-full ${highlighted ? "bg-purple-500 hover:bg-purple-600" : ""}`}
         >
-          <a
-            href={actionUrl}
-            className="w-full h-full flex items-center justify-center"
-          >
-            Choose Plan
-          </a>
+          <SignedIn>
+            <a
+              href={actionUrl}
+              className="w-full h-full flex items-center justify-center"
+            >
+              Choose Plan
+            </a>
+          </SignedIn>
+          <SignedOut>
+            <SignInButton>
+              <a
+                href={actionUrl}
+                className="w-full h-full flex items-center justify-center"
+              >
+                Choose Plan
+              </a>
+            </SignInButton>
+          </SignedOut>
         </Button>
       </CardFooter>
     </Card>
