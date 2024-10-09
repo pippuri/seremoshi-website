@@ -1,15 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Moon,
-  Sun,
-  BarChart,
-  CreditCard,
-  Clock,
-  Check,
-  Link,
-} from "lucide-react";
+import { BarChart, CreditCard, Clock, Check } from "lucide-react";
 import { useTheme } from "next-themes";
 import Navbar from "../components/common/navbar";
 import { Button } from "@/components/ui/button";
@@ -21,16 +13,9 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
 
 export default function Component() {
-  const { setTheme, theme } = useTheme();
+  //const { setTheme, theme } = useTheme(); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-800">

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
 
 const ThemeToggle = () => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme(); // eslint-disable-line @typescript-eslint/no-unused-vars
   const [mounted, setMounted] = useState(false);
 
   // When mounted on client, now we can show the UI

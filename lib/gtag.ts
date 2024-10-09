@@ -8,6 +8,7 @@ export const pageview = (url: string) => {
 };
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const event = ({ action, category, label, value }: any) => {
   window.gtag("event", action, {
     event_category: category,
