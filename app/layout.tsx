@@ -6,6 +6,7 @@ import Navbar from "../components/common/navbar";
 import Script from "next/script";
 import { GA_TRACKING_ID } from "../lib/gtag";
 import Analytics from "../components/common/Analytics";
+import { Footer } from "@/components/common/footer";
 
 export const metadata: Metadata = {
   title: "moshizen",
@@ -62,6 +63,7 @@ export default function RootLayout({
             {children}
           </ThemeProvider>
         </ClerkProvider>
+        <Footer />
       </body>
     </html>
   );
