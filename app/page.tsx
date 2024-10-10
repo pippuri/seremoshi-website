@@ -11,12 +11,19 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  useUser,
+} from "@clerk/nextjs";
 import { AboutSection } from "@/components/common/about";
 
 export default function Component() {
   //const { setTheme, theme } = useTheme(); // eslint-disable-line @typescript-eslint/no-unused-vars
-
+  const userObject = useUser();
+  const user = userObject.user;
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-800">
       <main className="container mx-auto px-4 py-16">
@@ -41,17 +48,17 @@ export default function Component() {
             <FeatureCard
               icon={<Clock className="w-10 h-10 text-purple-500" />}
               title="More time to focus on your business"
-              description="Let moshizen handle your calls, so you can focus on growing your business."
+              description="Let moshizen handle your calls, so you can focus on growing your business. Just refer cold callers to speak with your AI, all the way from picking up to figuring out the caller's purpose and aligning with your preferences."
             />
             <FeatureCard
               icon={<BarChart className="w-10 h-10 text-purple-500" />}
               title="Comprehensive Analytics"
-              description="Tools to keep track of how moshizen is handling your calls."
+              description="Tools to keep track of how moshizen is handling your calls. You get a full dashboard of past performance and insights into how your instructions are working, with full history of contacts. No more 'Oh I forgot so-and-so called!'"
             />
             <FeatureCard
               icon={<CreditCard className="w-10 h-10 text-purple-500" />}
               title="Straightforward Pricing"
-              description="We have a pricing model that makes sense and scales with your business."
+              description="We have a pricing model that makes sense and scales with your business. Try getting someone to pick up the phone 24/7 just for $0.05 per entire call."
             />
           </div>
         </section>
@@ -63,16 +70,17 @@ export default function Component() {
           <div className="grid md:grid-cols-3 gap-8">
             <PricingCard
               title="Starter"
-              price="$2"
+              price="$9"
               description="Perfect for individuals"
-              actionUrl="https://buy.stripe.com/28ocQ87Eq4G5dwI5ko"
+              actionUrl={`https://buy.stripe.com/fZecQ85wi7SheAMdQV?prefilled_email=${user?.primaryEmailAddress}&prefilled_phone=${user?.primaryPhoneNumber}`}
               features={[
-                "50 AI-answered calls per month",
+                "20 screened calls per month",
                 "Custom instructions",
-                "0.01$ per call extra",
+                "0.10$ per call extra",
                 "Email transcripts",
                 "Customer Portal",
                 "Analytics",
+                "30-day history",
                 "Email support",
               ]}
             />
@@ -80,14 +88,15 @@ export default function Component() {
               title="Pro"
               price="$19"
               description="Ideal for busy executives"
-              actionUrl="https://buy.stripe.com/28ocQ87Eq4G5dwI5ko"
+              actionUrl={`https://buy.stripe.com/fZecQ85wi7SheAMdQV?prefilled_email=${user?.primaryEmailAddress}&prefilled_phone=${user?.primaryPhoneNumber}`}
               features={[
-                "200 AI-answered calls per month",
+                "50 screened calls per month",
                 "Custom instructions",
-                "0.01$ per call extra",
+                "0.05$ per call extra",
                 "Email transcripts",
                 "Customer Portal",
                 "Analytics",
+                "Unlimited history",
                 "Priority email support",
               ]}
               highlighted={true}
@@ -95,12 +104,13 @@ export default function Component() {
             <PricingCard
               title="Enterprise"
               price="Custom"
-              description="For large-scale operations"
+              description="For large-scale deployments"
               actionUrl="https://maas-solutions.fi/contact"
               features={[
                 "Custom limits",
                 "Custom instructions",
                 "Custom greeting",
+                "Premium numbers",
                 "Email transcripts",
                 "Customer Portal with SSO",
                 "Full analytics suite",

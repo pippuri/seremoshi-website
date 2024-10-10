@@ -1,7 +1,15 @@
 "use client";
 
 import * as React from "react";
-import { BrainCog, ChartBarIcon, Moon, Sun, Menu, X } from "lucide-react";
+import {
+  BrainCog,
+  ChartBarIcon,
+  Moon,
+  Sun,
+  Menu,
+  X,
+  CreditCardIcon,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
@@ -72,6 +80,11 @@ export default function Navbar() {
                 label="AI Settings"
                 labelIcon={<BrainCog />}
                 href="/dashboard/settings"
+              />
+              <UserButton.Link
+                label="Manage Subscription"
+                labelIcon={<CreditCardIcon />}
+                href="https://billing.stripe.com/p/login/aEUcPxglJ29FfWU8ww"
               />
             </UserButton.MenuItems>
           </UserButton>

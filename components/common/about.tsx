@@ -22,12 +22,12 @@ export function AboutSection() {
           <AboutCard
             icon={<Clock className="w-10 h-10 text-purple-500" />}
             title="Your time matters"
-            description="No more 'I just want 5 minutes of your time'. Just refer cold callers to speak with your AI."
+            description="No more 'I just want 5 minutes of your time'."
           />
           <AboutCard
             icon={<Shield className="w-10 h-10 text-purple-500" />}
             title="Secure & Reliable"
-            description="Rest easy knowing your data is protected by state-of-the-art security measures."
+            description="Rest easy knowing your data is protected by state-of-the-art security measures. You get the full transcript of the call - and only you - so you are not missing out on any opportunities and can take action at your leisure if needed."
           />
           <AboutCard
             icon={<Rocket className="w-10 h-10 text-purple-500" />}
