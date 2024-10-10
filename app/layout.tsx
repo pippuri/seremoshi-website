@@ -36,6 +36,15 @@ export default function RootLayout({
             });
           `}
         </Script>
+        <Script>
+          {`
+              var _iub = _iub || [];
+              _iub.csConfiguration = {"siteId":3793871,"cookiePolicyId":30680630,"lang":"en","storage":{"useSiteId":true}};
+          `}
+        </Script>
+        <Script>src="https://cs.iubenda.com/autoblocking/3793871.js"</Script>
+        <Script>src="//cdn.iubenda.com/cs/gpp/stub.js"</Script>
+        <Script>src="//cdn.iubenda.com/cs/iubenda_cs.js"</Script>
         <link
           rel="apple-touch-icon"
           sizes="180x180"

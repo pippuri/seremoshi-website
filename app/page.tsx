@@ -134,16 +134,10 @@ export default function Component() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button size="lg" className="rounded-full">
-              <SignUpButton />
-            </Button>
+            <SignUpButton />
           </CardContent>
         </Card>
       </main>
-
-      <footer className="container mx-auto px-4 py-8 mt-16 text-center text-muted-foreground">
-        © 2024 moshizen. All rights reserved.
-      </footer>
     </div>
   );
 }
