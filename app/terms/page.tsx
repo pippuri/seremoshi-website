@@ -80,7 +80,7 @@ export default function TermsOfService() {
             href="mailto:info@maas-solutions.fi"
             className="text-blue-600 hover:underline"
           >
-            support@moshizen.com
+            info@maas-solutions.fi
           </a>
           .
         </p>

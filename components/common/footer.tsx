@@ -77,6 +77,16 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
+            <ul className="mt-4 space-y-2">
+              <li>
+                <Link
+                  href="/terms"
+                  className="text-base text-gray-500 hover:text-gray-900"
+                >
+                  Terms of Service
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
         <div className="mt-8 border-t border-gray-200 pt-8 flex justify-between items-center">
