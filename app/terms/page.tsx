@@ -13,8 +13,8 @@ export default function TermsOfService() {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
         <p className="mb-4">
-          By accessing or using Moshizen's services, you agree to be bound by
-          these Terms of Service. If you disagree with any part of the terms,
+          By accessing or using Moshizen&apos;s services, you agree to be bound
+          by these Terms of Service. If you disagree with any part of the terms,
           you may not access the service.
         </p>
       </section>
