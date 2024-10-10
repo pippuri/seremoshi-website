@@ -19,8 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Phone } from "lucide-react";
-import { SignInButton, useAuth } from "@clerk/nextjs";
-
+import { useAuth } from "@clerk/nextjs";
 const profileFormSchema = z.object({
   phoneNumber: z.string().regex(/^\+?[1-9]\d{1,14}$/, {
     message: "Please enter a valid phone number in international format.",
@@ -57,7 +56,10 @@ export function SettingsForm() {
       },
     });
     const settings = await response.json();
-    return settings.serviceInstructions;
+    if (settings?.verified) {
+      handleVerificationSuccess();
+    }
+    return settings?.serviceInstructions;
   }
 
   async function onSubmit(data: ProfileFormValues) {
@@ -79,25 +81,18 @@ export function SettingsForm() {
         body: JSON.stringify({ serviceInstructions: data.serviceInstructions }),
       });
       console.log("Saving service instructions:", data.serviceInstructions);
+      console.log("Response:", await response.json());
     }
   }
 
   // This function would be called by your backend after successful verification
   function handleVerificationSuccess() {
     setIsPhoneVerified(true);
-    setPinCode(null);
+    //setPinCode(null);
     setVerificationPhoneNumber(null);
   }
-  const { getToken, isLoaded, isSignedIn } = useAuth();
 
-  if (!isSignedIn) {
-    // Handle signed out state however you like
-    return (
-      <div>
-        <SignInButton />
-      </div>
-    );
-  }
+  const { getToken } = useAuth();
 
   // init the form by fetching settings from server
   useEffect(() => {
@@ -113,7 +108,7 @@ export function SettingsForm() {
       });
     };
     fn();
-  }, []);
+  }, [form, getToken, getServiceInstructions]);
 
   return (
     <Form {...form}>
@@ -168,8 +163,8 @@ export function SettingsForm() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Provide instructions for how you'd like the service to handle
-                  your calls.
+                  Provide instructions for how you&apos;d like the service to
+                  handle your calls.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
