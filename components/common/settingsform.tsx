@@ -63,6 +63,7 @@ export function SettingsForm() {
   }
 
   async function onSubmit(data: ProfileFormValues) {
+    console.log("onSubmit", data);
     if (!isPhoneVerified) {
       const response = await fetch(
         APIURL + "/verify?phone_number=" + data.phoneNumber,
