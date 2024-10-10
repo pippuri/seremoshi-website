@@ -27,28 +27,22 @@ export default function SettingsPage() {
               Profile
             </a>
             <a
-              href="#"
+              href="https://account.moshizen.com"
               className="block px-3 py-2 hover:bg-secondary rounded-md"
             >
               Account
             </a>
             <a
-              href="#"
+              href="https://billing.stripe.com/p/login/aEUcPxglJ29FfWU8ww"
               className="block px-3 py-2 hover:bg-secondary rounded-md"
             >
-              Appearance
+              Subscription
             </a>
             <a
               href="#"
               className="block px-3 py-2 hover:bg-secondary rounded-md"
             >
               Notifications
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 hover:bg-secondary rounded-md"
-            >
-              Display
             </a>
           </nav>
         </aside>

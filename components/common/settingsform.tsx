@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -12,134 +13,181 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Phone } from "lucide-react";
+import { SignInButton, useAuth } from "@clerk/nextjs";
 
 const profileFormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  phoneNumber: z.string().regex(/^\+?[1-9]\d{1,14}$/, {
+    message: "Please enter a valid phone number in international format.",
   }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
+  serviceInstructions: z.string().max(2000, {
+    message: "Instructions must be 2000 characters or less.",
   }),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(z.string().url({ message: "Please enter a valid URL." }))
-    .optional(),
 });
+
+const APIURL = "https://irkhexa2uc.execute-api.eu-central-1.amazonaws.com/api";
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 export function SettingsForm() {
+  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  const [pinCode, setPinCode] = useState<string | null>(null);
+  const [verificationPhoneNumber, setVerificationPhoneNumber] = useState<
+    string | null
+  >(null);
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      username: "shadcn",
-      email: "",
-      bio: "",
-      urls: ["", ""],
+      phoneNumber: "",
+      serviceInstructions: "",
     },
   });
 
-  function onSubmit(data: ProfileFormValues) {
-    console.log(data);
+  async function getServiceInstructions(token: string) {
+    const response = await fetch(APIURL + "/settings", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const settings = await response.json();
+    return settings.serviceInstructions;
   }
+
+  async function onSubmit(data: ProfileFormValues) {
+    if (!isPhoneVerified) {
+      const response = await fetch(
+        APIURL + "/verify?phone_number=" + data.phoneNumber,
+        {
+          method: "GET",
+        }
+      );
+      const verificationResponse = await response.json();
+      console.log("Verification code:", verificationResponse.code);
+      setPinCode(verificationResponse.code);
+      setVerificationPhoneNumber(verificationResponse.phone_number);
+    } else {
+      // TODO: Implement saving service instructions
+      const response = await fetch(APIURL + "/settings", {
+        method: "POST",
+        body: JSON.stringify({ serviceInstructions: data.serviceInstructions }),
+      });
+      console.log("Saving service instructions:", data.serviceInstructions);
+    }
+  }
+
+  // This function would be called by your backend after successful verification
+  function handleVerificationSuccess() {
+    setIsPhoneVerified(true);
+    setPinCode(null);
+    setVerificationPhoneNumber(null);
+  }
+  const { getToken, isLoaded, isSignedIn } = useAuth();
+
+  if (!isSignedIn) {
+    // Handle signed out state however you like
+    return (
+      <div>
+        <SignInButton />
+      </div>
+    );
+  }
+
+  // init the form by fetching settings from server
+  useEffect(() => {
+    const fn = async () => {
+      const token = await getToken();
+      if (!token) {
+        console.log("No token");
+        return;
+      }
+      console.log("Token:", token);
+      getServiceInstructions(token).then((instructions) => {
+        form.setValue("serviceInstructions", instructions);
+      });
+    };
+    fn();
+  }, []);
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="phoneNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                You can manage verified email addresses in your email settings.
-              </FormDescription>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="bio"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
+                <Input
+                  placeholder="+1234567890"
                   {...field}
+                  disabled={isPhoneVerified}
                 />
               </FormControl>
               <FormDescription>
-                You can @mention other users and organizations to link to them.
+                Enter your phone number in international format to receive a PIN
+                code.
               </FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="urls"
-          render={() => (
-            <FormItem>
-              <FormLabel>URLs</FormLabel>
-              <FormControl>
-                <div className="space-y-2">
-                  {form
-                    .watch("urls")
-                    ?.map((_, index) => (
-                      <Input
-                        key={index}
-                        {...form.register(`urls.${index}`)}
-                        placeholder="https://example.com"
-                      />
-                    ))}
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <Button type="submit" className="bg-black text-white">
-          Update profile
-        </Button>
+
+        {pinCode && verificationPhoneNumber && !isPhoneVerified && (
+          <Alert>
+            <Phone className="h-4 w-4" />
+            <AlertTitle>Verification Required</AlertTitle>
+            <AlertDescription>
+              Your PIN code is: <strong>{pinCode}</strong>
+              <br />
+              Please call {verificationPhoneNumber} and enter this PIN when
+              prompted.
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {isPhoneVerified && (
+          <FormField
+            control={form.control}
+            name="serviceInstructions"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Service Instructions</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Enter your instructions for the service..."
+                    className="resize-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Provide instructions for how you'd like the service to handle
+                  your calls.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+
+        {!isPhoneVerified && (
+          <Button type="submit" className="bg-black text-white">
+            {pinCode ? "Get new PIN" : "Get PIN"}
+          </Button>
+        )}
+
+        {isPhoneVerified && (
+          <Button type="submit" className="bg-black text-white">
+            Save Instructions
+          </Button>
+        )}
       </form>
     </Form>
   );
