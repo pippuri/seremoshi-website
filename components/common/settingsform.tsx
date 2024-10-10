@@ -12,7 +12,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -43,7 +42,7 @@ export function SettingsForm() {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      username: "",
+      username: "shadcn",
       email: "",
       bio: "",
       urls: ["", ""],
@@ -70,7 +69,6 @@ export function SettingsForm() {
                 This is your public display name. It can be your real name or a
                 pseudonym. You can only change this once every 30 days.
               </FormDescription>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -95,7 +93,6 @@ export function SettingsForm() {
               <FormDescription>
                 You can manage verified email addresses in your email settings.
               </FormDescription>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -115,27 +112,34 @@ export function SettingsForm() {
               <FormDescription>
                 You can @mention other users and organizations to link to them.
               </FormDescription>
-              <FormMessage />
             </FormItem>
           )}
         />
-        {form.watch("urls")?.map((_, index) => (
-          <FormField
-            key={index}
-            control={form.control}
-            name={`urls.${index}`}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{index === 0 ? "URLs" : ""}</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        ))}
-        <Button type="submit">Update profile</Button>
+        <FormField
+          control={form.control}
+          name="urls"
+          render={() => (
+            <FormItem>
+              <FormLabel>URLs</FormLabel>
+              <FormControl>
+                <div className="space-y-2">
+                  {form
+                    .watch("urls")
+                    ?.map((_, index) => (
+                      <Input
+                        key={index}
+                        {...form.register(`urls.${index}`)}
+                        placeholder="https://example.com"
+                      />
+                    ))}
+                </div>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="bg-black text-white">
+          Update profile
+        </Button>
       </form>
     </Form>
   );
